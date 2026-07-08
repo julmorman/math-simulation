@@ -6,63 +6,110 @@
   <title>Simulador Macroeconómico: Impacto de Pantallas</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'JetBrains+Mono', monospace;
+    }
+    /* Efecto de brillo neón para los sliders y detalles */
+    input[type="range"]::-webkit-slider-thumb {
+      background: #ff6b00;
+      box-shadow: 0 0 10px #ff6b00, 0 0 20px #ff6b00;
+    }
+    .neon-border {
+      box-shadow: 0 0 15px rgba(255, 107, 0, 0.15);
+    }
+    .neon-text-orange {
+      text-shadow: 0 0 8px rgba(255, 107, 0, 0.6);
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen p-8">
-  <div class="max-w-6xl mx-auto">
-    
-    <header class="mb-8 border-b border-gray-700 pb-4">
-      <h1 class="text-3xl font-bold text-blue-400">Simulador de Impacto Económico: Adicción a Pantallas</h1>
-      <p class="text-gray-400 mt-2">Proyecciones del PBI de EE. UU. frente al costo del sedentarismo cognitivo.</p>
+<body class="bg-black text-gray-200 min-h-screen p-6 md:p-10 flex flex-col justify-between">
+  
+  <div class="max-w-7xl mx-auto w-full">
+    <header class="mb-10 border-b border-orange-500/30 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <div class="flex items-center gap-2 text-xs text-orange-500 font-bold uppercase tracking-widest mb-1">
+          <span class="h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+          Sistema de Proyección Predictiva v2.4
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+          PBI <span class="text-orange-500 neon-text-orange">VS</span> PANTALLAS
+        </h1>
+        <p class="text-sm text-gray-500 mt-1">Modelado matemático del impacto del sedentarismo cognitivo en la economía global.</p>
+      </div>
+      <div class="bg-zinc-900 border border-orange-500/40 px-4 py-2 rounded text-xs text-orange-400 font-mono">
+        STATUS: ACTIVE_SIMULATION
+      </div>
     </header>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       
-      <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
-        <h2 class="text-xl font-semibold mb-4 text-green-400">Parámetros del Modelo</h2>
-        
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Crecimiento Anual PBI Base: <span id="pbiVal">2.0</span>%</label>
-          <input type="range" id="pbiGrowth" min="0" max="5" step="0.1" value="2.0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+      <div class="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 neon-border flex flex-col justify-between gap-6">
+        <div>
+          <h2 class="text-lg font-bold uppercase tracking-wider mb-6 text-white border-b border-zinc-800 pb-2 flex justify-between items-center">
+            <span>Parámetros</span>
+            <span class="text-xs text-zinc-600">[INPUTS]</span>
+          </h2>
+          
+          <div class="mb-6">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-zinc-400">Crecimiento PBI Base</span>
+              <span class="text-emerald-400 font-bold" id="pbiVal">2.0</span>
+            </div>
+            <input type="range" id="pbiGrowth" min="0" max="5" step="0.1" value="2.0" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+          </div>
+
+          <div class="mb-6">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-zinc-400">Crecimiento Adicción Digital</span>
+              <span class="text-orange-500 font-bold" id="screenVal">3.5</span>
+            </div>
+            <input type="range" id="screenGrowth" min="0" max="10" step="0.1" value="3.5" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+          </div>
+
+          <div class="mb-6">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-zinc-400">Mitigación Conductual (Nudges)</span>
+              <span class="text-cyan-400 font-bold" id="nudgeVal">20</span>
+            </div>
+            <input type="range" id="nudgeEffect" min="0" max="100" step="5" value="20" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+            <p class="text-[10px] text-zinc-500 mt-2 leading-relaxed">Simula regulaciones como la prohibición celular en escuelas o entornos con pantallas en escala de grises.</p>
+          </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Tasa Crecimiento Adicción Digital: <span id="screenVal">3.5</span>%</label>
-          <input type="range" id="screenGrowth" min="0" max="10" step="0.1" value="3.5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-        </div>
-
-        <div class="mb-6">
-          <label class="block text-sm font-medium mb-1">Efectividad de Medidas Mitigación (Nudges): <span id="nudgeVal">20</span>%</label>
-          <input type="range" id="nudgeEffect" min="0" max="100" step="5" value="20" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-          <p class="text-xs text-gray-400 mt-1">Ej: Prohibición en escuelas (74% actual) o pantallas en grises[cite: 56, 70].</p>
-        </div>
-
-        <div class="border-t border-gray-700 pt-4">
-          <h3 class="text-sm font-semibold uppercase text-gray-400 mb-2">Algoritmo Predictivo (IA)</h3>
-          <div class="p-3 bg-gray-900 rounded border border-gray-700">
-            <p class="text-xs text-blue-300 font-mono">Regresión Polinómica / Modelo de Pérdida Activo</p>
+        <div class="border-t border-zinc-800 pt-4">
+          <div class="p-4 bg-zinc-900/50 rounded-xl border border-orange-500/20">
+            <div class="text-[10px] text-orange-500 font-bold uppercase tracking-widest mb-1">Motor Algorítmico</div>
+            <div class="text-xs text-zinc-300 font-mono">Regresión polinómica adaptativa ejecutando proyecciones iterativas a 30 años.</div>
           </div>
         </div>
       </div>
 
-      <div class="lg:col-span-2 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between">
-        <div class="relative h-80 w-full">
+      <div class="lg:col-span-2 bg-zinc-950 p-6 rounded-2xl border border-zinc-800 neon-border flex flex-col justify-between gap-6">
+        
+        <div class="relative h-80 w-full bg-black/40 p-2 rounded-xl border border-zinc-900">
           <canvas id="projectionChart"></canvas>
         </div>
         
-        <div class="grid grid-cols-2 gap-4 mt-6 border-t border-gray-700 pt-4">
-          <div class="p-4 bg-gray-900 rounded-lg">
-            <span class="text-xs text-gray-400 block">PBI Perdido Acumulado (2026-2056)</span>
-            <span class="text-xl font-bold text-red-400" id="lostPbiTotal">US$ 0.00B</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-zinc-800 pt-4">
+          <div class="p-4 bg-zinc-900/30 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-500 uppercase tracking-wider block mb-1">Brecha de PBI Acumulada</span>
+            <span class="text-2xl font-black text-red-500 tracking-tight" id="lostPbiTotal">US$ 0.00T</span>
           </div>
-          <div class="p-4 bg-gray-900 rounded-lg">
-            <span class="text-xs text-gray-400 block">Costo Anual de Pantallas en 2056</span>
-            <span class="text-xl font-bold text-yellow-400" id="finalCost">US$ 0.00B</span>
+          <div class="p-4 bg-zinc-900/30 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-500 uppercase tracking-wider block mb-1">Costo Digital Anual Futuro</span>
+            <span class="text-2xl font-black text-orange-500 neon-text-orange tracking-tight" id="finalCost">US$ 0.00B</span>
           </div>
         </div>
       </div>
 
     </div>
   </div>
+
+  <footer class="mt-10 text-center text-[10px] text-zinc-600 border-t border-zinc-900 pt-4 w-full">
+    PROYECTO INTERDISCIPLINARIO ECONOMICS & MATHS // S2-2026
+  </footer>
 
   <script type="module" src="/src/main.ts"></script>
 </body>

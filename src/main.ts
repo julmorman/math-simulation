@@ -19,7 +19,7 @@ const projectionYears = 30;
 let labels: number[] = [];
 for (let i = 0; i <= projectionYears; i++) labels.push(startYear + i);
 
-// Configurar Chart.js
+// Reemplazá la sección de "Configurar Chart.js" en tu src/main.ts con esto:
 const ctx = (document.getElementById('projectionChart') as HTMLCanvasElement).getContext('2d')!;
 // @ts-ignore
 let projectionChart = new Chart(ctx, {
@@ -27,17 +27,22 @@ let projectionChart = new Chart(ctx, {
   data: {
     labels: labels,
     datasets: [
-      { label: 'PBI Potencial (Sin Costo Digital)', data: [], borderColor: '#34d399', backgroundColor: 'transparent', tension: 0.1 },
-      { label: 'PBI Real Proyectado', data: [], borderColor: '#60a5fa', backgroundColor: 'transparent', tension: 0.1 },
-      { label: 'Costo Anual por Adicción', data: [], borderColor: '#f87171', backgroundColor: 'transparent', tension: 0.1, yAxisID: 'y1' }
+      { label: 'PBI Potencial (Óptimo)', data: [], borderColor: '#34d399', backgroundColor: 'transparent', tension: 0.2, borderWidth: 3 }, // Verde Esmeralda
+      { label: 'PBI Real Proyectado', data: [], borderColor: '#38bdf8', backgroundColor: 'transparent', tension: 0.2, borderWidth: 3 }, // Celeste Eléctrico
+      { label: 'Costo de Adicción Digital', data: [], borderColor: '#ff6b00', backgroundColor: 'transparent', tension: 0.2, borderWidth: 2, yAxisID: 'y1', borderDash: [5, 5] } // Naranja Fluo Línea de Puntos
     ]
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: { color: '#a1a1aa', font: { family: 'JetBrains Mono', size: 11 } } // Color de etiquetas gris claro
+      }
+    },
     scales: {
-      y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'PBI (En Billones US$)' } },
-      y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Costo Digital (En Miles de Millones US$)' } }
+      y: { type: 'linear', display: true, position: 'left', grid: { color: '#18181b' }, ticks: { color: '#a1a1aa' }, title: { display: true, text: 'PBI (Billones US$)', color: '#a1a1aa' } },
+      y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#ff6b00' }, title: { display: true, text: 'Costo (Miles de Millones US$)', color: '#ff6b00' } }
     }
   }
 });
