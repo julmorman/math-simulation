@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador Macroeconómico: Impacto de Pantallas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen p-8">
+  <div class="max-w-6xl mx-auto">
+    
+    <header class="mb-8 border-b border-gray-700 pb-4">
+      <h1 class="text-3xl font-bold text-blue-400">Simulador de Impacto Económico: Adicción a Pantallas</h1>
+      <p class="text-gray-400 mt-2">Proyecciones del PBI de EE. UU. frente al costo del sedentarismo cognitivo.</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+        <h2 class="text-xl font-semibold mb-4 text-green-400">Parámetros del Modelo</h2>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Crecimiento Anual PBI Base: <span id="pbiVal">2.0</span>%</label>
+          <input type="range" id="pbiGrowth" min="0" max="5" step="0.1" value="2.0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Tasa Crecimiento Adicción Digital: <span id="screenVal">3.5</span>%</label>
+          <input type="range" id="screenGrowth" min="0" max="10" step="0.1" value="3.5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium mb-1">Efectividad de Medidas Mitigación (Nudges): <span id="nudgeVal">20</span>%</label>
+          <input type="range" id="nudgeEffect" min="0" max="100" step="5" value="20" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+          <p class="text-xs text-gray-400 mt-1">Ej: Prohibición en escuelas (74% actual) o pantallas en grises[cite: 56, 70].</p>
+        </div>
+
+        <div class="border-t border-gray-700 pt-4">
+          <h3 class="text-sm font-semibold uppercase text-gray-400 mb-2">Algoritmo Predictivo (IA)</h3>
+          <div class="p-3 bg-gray-900 rounded border border-gray-700">
+            <p class="text-xs text-blue-300 font-mono">Regresión Polinómica / Modelo de Pérdida Activo</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between">
+        <div class="relative h-80 w-full">
+          <canvas id="projectionChart"></canvas>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mt-6 border-t border-gray-700 pt-4">
+          <div class="p-4 bg-gray-900 rounded-lg">
+            <span class="text-xs text-gray-400 block">PBI Perdido Acumulado (2026-2056)</span>
+            <span class="text-xl font-bold text-red-400" id="lostPbiTotal">US$ 0.00B</span>
+          </div>
+          <div class="p-4 bg-gray-900 rounded-lg">
+            <span class="text-xs text-gray-400 block">Costo Anual de Pantallas en 2056</span>
+            <span class="text-xl font-bold text-yellow-400" id="finalCost">US$ 0.00B</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
