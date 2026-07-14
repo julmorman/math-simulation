@@ -11,7 +11,6 @@
     body {
       font-family: 'JetBrains+Mono', monospace;
     }
-    /* Efecto de brillo neón para los sliders y detalles */
     input[type="range"]::-webkit-slider-thumb {
       background: #ff6b00;
       box-shadow: 0 0 10px #ff6b00, 0 0 20px #ff6b00;
@@ -27,6 +26,7 @@
 <body class="bg-black text-gray-200 min-h-screen p-6 md:p-10 flex flex-col justify-between">
   
   <div class="max-w-7xl mx-auto w-full">
+    <!-- Encabezado Estilo Terminal de Comando -->
     <header class="mb-10 border-b border-orange-500/30 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
       <div>
         <div class="flex items-center gap-2 text-xs text-orange-500 font-bold uppercase tracking-widest mb-1">
@@ -36,15 +36,16 @@
         <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
           PBI <span class="text-orange-500 neon-text-orange">VS</span> PANTALLAS
         </h1>
-        <p class="text-sm text-gray-500 mt-1">Modelado matemático del impacto del sedentarismo cognitivo en la economía global.</p>
+        <p class="text-sm text-gray-500 mt-1">Modelado matemático del impacto del sedentarismo cognitivo en la economía de EE. UU.</p>
       </div>
       <div class="bg-zinc-900 border border-orange-500/40 px-4 py-2 rounded text-xs text-orange-400 font-mono">
-        STATUS: ACTIVE_SIMULATION
+        STATUS: US_ACTIVE_SIMULATION
       </div>
     </header>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       
+      <!-- PANEL DE CONTROL (Inputs basados estrictamente en el texto) -->
       <div class="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 neon-border flex flex-col justify-between gap-6">
         <div>
           <h2 class="text-lg font-bold uppercase tracking-wider mb-6 text-white border-b border-zinc-800 pb-2 flex justify-between items-center">
@@ -52,53 +53,60 @@
             <span class="text-xs text-zinc-600">[INPUTS]</span>
           </h2>
           
+          <!-- Slider 1: PBI -->
           <div class="mb-6">
             <div class="flex justify-between text-sm mb-2">
-              <span class="text-zinc-400">Crecimiento PBI Base</span>
-              <span class="text-emerald-400 font-bold" id="pbiVal">2.0</span>
+              <span class="text-zinc-400">Crecimiento PBI Base EE. UU.</span>
+              <span class="text-emerald-400 font-bold" id="pbiVal">2.0%</span>
             </div>
             <input type="range" id="pbiGrowth" min="0" max="5" step="0.1" value="2.0" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
           </div>
 
+          <!-- Slider 2: Unidades físicas tangibles de horas (Estudio Jean Twenge) -->
           <div class="mb-6">
             <div class="flex justify-between text-sm mb-2">
-              <span class="text-zinc-400">Crecimiento Adicción Digital</span>
-              <span class="text-orange-500 font-bold" id="screenVal">3.5</span>
+              <span class="text-zinc-400">Tiempo de Uso Diario (Redes)</span>
+              <span class="text-orange-500 font-bold" id="screenVal">3.5 hrs</span>
             </div>
-            <input type="range" id="screenGrowth" min="0" max="10" step="0.1" value="3.5" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+            <input type="range" id="screenGrowth" min="0" max="8" step="0.1" value="3.5" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
           </div>
 
+          <!-- Slider 3: Unidad física de porcentaje de escuelas restringidas (Dato real 74%) -->
           <div class="mb-6">
             <div class="flex justify-between text-sm mb-2">
-              <span class="text-zinc-400">Mitigación Conductual (Nudges)</span>
-              <span class="text-cyan-400 font-bold" id="nudgeVal">20</span>
+              <span class="text-zinc-400">Prohibición Celular Escolar</span>
+              <span class="text-cyan-400 font-bold" id="nudgeVal">74%</span>
             </div>
-            <input type="range" id="nudgeEffect" min="0" max="100" step="5" value="20" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
-            <p class="text-[10px] text-zinc-500 mt-2 leading-relaxed">Simula regulaciones como la prohibición celular en escuelas o entornos con pantallas en escala de grises.</p>
+            <input type="range" id="nudgeEffect" min="0" max="100" step="1" value="74" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+            <p class="text-[10px] text-zinc-500 mt-2 leading-relaxed">Mide el impacto de restricciones de pantalla según el experimento de Florida (2023) citado en el artículo[cite: 1].</p>
           </div>
         </div>
 
+        <!-- Caja de IA Informativa -->
         <div class="border-t border-zinc-800 pt-4">
           <div class="p-4 bg-zinc-900/50 rounded-xl border border-orange-500/20">
             <div class="text-[10px] text-orange-500 font-bold uppercase tracking-widest mb-1">Motor Algorítmico</div>
-            <div class="text-xs text-zinc-300 font-mono">Regresión polinómica adaptativa ejecutando proyecciones iterativas a 30 años.</div>
+            <div class="text-xs text-zinc-300 font-mono">Regresión predictiva basada en los costos de productividad de la Asociación Americana de Optometría[cite: 1].</div>
           </div>
         </div>
       </div>
 
+      <!-- PANEL DEL GRÁFICO Y MÉTRICAS -->
       <div class="lg:col-span-2 bg-zinc-950 p-6 rounded-2xl border border-zinc-800 neon-border flex flex-col justify-between gap-6">
         
+        <!-- Contenedor del Gráfico -->
         <div class="relative h-80 w-full bg-black/40 p-2 rounded-xl border border-zinc-900">
           <canvas id="projectionChart"></canvas>
         </div>
         
+        <!-- Métricas Principales de Estados Unidos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-zinc-800 pt-4">
           <div class="p-4 bg-zinc-900/30 rounded-xl border border-zinc-800">
-            <span class="text-xs text-zinc-500 uppercase tracking-wider block mb-1">Brecha de PBI Acumulada</span>
+            <span class="text-xs text-zinc-500 uppercase tracking-wider block mb-1">Brecha de PBI EE. UU. Acumulada</span>
             <span class="text-2xl font-black text-red-500 tracking-tight" id="lostPbiTotal">US$ 0.00T</span>
           </div>
           <div class="p-4 bg-zinc-900/30 rounded-xl border border-zinc-800">
-            <span class="text-xs text-zinc-500 uppercase tracking-wider block mb-1">Costo Digital Anual Futuro</span>
+            <span class="text-xs text-zinc-500 uppercase tracking-wider block mb-1">Costo Digital Anual en EE. UU.</span>
             <span class="text-2xl font-black text-orange-500 neon-text-orange tracking-tight" id="finalCost">US$ 0.00B</span>
           </div>
         </div>
@@ -108,7 +116,7 @@
   </div>
 
   <footer class="mt-10 text-center text-[10px] text-zinc-600 border-t border-zinc-900 pt-4 w-full">
-    PROYECTO INTERDISCIPLINARIO ECONOMICS & MATHS // S2-2026
+    PROYECTO INTERDISCIPLINARIO ECONOMICS & MATHS // S2-2026[cite: 1]
   </footer>
 
   <script type="module" src="/src/main.ts"></script>

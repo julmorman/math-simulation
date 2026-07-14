@@ -47,16 +47,17 @@ let projectionChart = new Chart(ctx, {
   }
 });
 
-// Función de simulación matemática (Motor Predictivo)
+// Función de simulación matemática (Motor Predictivo basado estrictamente en datos de EE. UU.)
 function calculateProjections() {
+  // Captura de datos tangibles de los sliders
   const pbiRate = parseFloat(pbiGrowthInput.value) / 100;
-  const screenRate = parseFloat(screenGrowthInput.value) / 100;
-  const nudgeFactor = parseFloat(nudgeEffectInput.value) / 100;
+  const horasUso = parseFloat(screenGrowthInput.value); // Unidad: Horas diarias (Crítico > 5h)
+  const prohibicionColegios = parseFloat(nudgeEffectInput.value) / 100; // Unidad: % de colegios
 
-  // Actualizar etiquetas de texto
-  pbiVal.innerText = pbiGrowthInput.value;
-  screenVal.innerText = screenGrowthInput.value;
-  nudgeVal.innerText = nudgeEffectInput.value;
+  // Actualizar las etiquetas de la interfaz con sus unidades correctas
+  pbiVal.innerText = pbiGrowthInput.value + "%";
+  screenVal.innerText = horasUso.toFixed(1) + " hrs";
+  nudgeVal.innerText = (prohibicionColegios * 100).toFixed(0) + "%";
 
   let pbiPotencialData: string[] = [];
   let pbiRealData: string[] = [];
@@ -66,12 +67,21 @@ function calculateProjections() {
   let currentPbiReal = PBI_BASE_2026;
   let accumulatedLostPbi = 0;
 
+  // Factor de penalización matemática si se superan las 5 horas críticas del artículo
+  const factorExceso = horasUso > 5 ? 1 + (horasUso - 5) * 0.25 : 1 - (5 - horasUso) * 0.1;
+  
+  // Factor de mitigación real basado en la efectividad de la prohibición escolar (hasta un 30% de reducción del impacto)
+  const factorMitigacion = 1 - (prohibicionColegios * 0.3);
+
   for (let t = 0; t <= projectionYears; t++) {
-    let currentCosto = COST_BASE_2026 * Math.pow(1 + screenRate, t) * (1 - nudgeFactor * 0.5);
+    // Costo proyectado para EE. UU. combinando el costo base de 151B con las variables físicas medibles
+    let currentCosto = COST_BASE_2026 * factorExceso * factorMitigacion * Math.pow(1 + 0.015, t);
     
     if (t > 0) {
       currentPbiPotencial *= (1 + pbiRate);
-      currentPbiReal = currentPbiReal * (1 + pbiRate) - (currentCosto * 0.56);
+      // Afectación directa al PBI basada en el 56% de pérdida de productividad (86.3B / 151B)
+      let perdidaProductividad = currentCosto * (86.3 / 151);
+      currentPbiReal = currentPbiReal * (1 + pbiRate) - perdidaProductividad;
       accumulatedLostPbi += (currentPbiPotencial - currentPbiReal);
     }
 
@@ -80,8 +90,9 @@ function calculateProjections() {
     costoData.push(currentCosto.toFixed(2));
   }
 
-  lostPbiTotalElem.innerText = `US$ ${(accumulatedLostPbi / 1000).toFixed(2)} Trillion`;
-  finalCostElem.innerText = `US$ ${costoData[costoData.length - 1]} Billion`;
+  // Actualizar UI con los resultados macroeconómicos de EE. UU.
+  lostPbiTotalElem.innerText = `US$ ${(accumulatedLostPbi / 1000).toFixed(2)} T`;
+  finalCostElem.innerText = `US$ ${costoData[costoData.length - 1]} B`;
 
   projectionChart.data.datasets[0].data = pbiPotencialData;
   projectionChart.data.datasets[1].data = pbiRealData;
